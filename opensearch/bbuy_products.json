@@ -120,6 +120,7 @@
       },
       "description": {
         "type": "text",
+        "analyzer": "english",
         "fields": {
           "keyword": {
             "type": "keyword",
@@ -170,10 +171,16 @@
         }
       },
       "image": {
-        "type": "keyword"
+        "type": "text",
+        "fields": {
+          "keyword": {
+            "type": "keyword",
+            "ignore_above": 256
+          }
+        }
       },
       "inStoreAvailability": {
-        "type": "bolean"
+        "type": "boolean"
       },
       "inStorePickup": {
         "type": "text",
@@ -186,10 +193,23 @@
       },
       "longDescription": {
         "type": "text",
-        "analyzer": "english"
+        "analyzer": "english",
+        "fields": {
+          "keyword": {
+            "type": "keyword",
+            "ignore_above": 256
+          }
+        }
       },
       "longDescriptionHtml": {
-        "type": "keyword"
+        "type": "text",
+        "analyzer": "english",
+        "fields": {
+          "keyword": {
+            "type": "keyword",
+            "ignore_above": 256
+          }
+        }        
       },
       "manufacturer": {
         "type": "text",
@@ -211,7 +231,13 @@
       },
       "name": {
         "type": "text",
-        "analyzer": "english"
+        "analyzer": "english",
+        "fields": {
+          "keyword": {
+            "type": "keyword",
+            "ignore_above": 256
+          }
+        }
       },
       "onSale": {
         "type": "boolean"
@@ -244,31 +270,13 @@
         "type": "float"
       },
       "salesRankLongTerm": {
-        "type": "text",
-        "fields": {
-          "keyword": {
-            "type": "keyword",
-            "ignore_above": 256
-          }
-        }
+        "type": "long"
       },
       "salesRankMediumTerm": {
-        "type": "text",
-        "fields": {
-          "keyword": {
-            "type": "keyword",
-            "ignore_above": 256
-          }
-        }
+        "type": "long"
       },
       "salesRankShortTerm": {
-        "type": "text",
-        "fields": {
-          "keyword": {
-            "type": "keyword",
-            "ignore_above": 256
-          }
-        }
+        "type": "long"
       },
       "shippingCost": {
         "type": "float"
@@ -284,6 +292,7 @@
       },
       "shortDescription": {
         "type": "text",
+        "analyzer": "english",
         "fields": {
           "keyword": {
             "type": "keyword",
@@ -293,7 +302,13 @@
       },
       "shortDescriptionHtml": {
         "type": "text",
-        "analyzer": "english"
+        "analyzer": "english",
+        "fields": {
+          "keyword": {
+            "type": "keyword",
+            "ignore_above": 256
+          }
+        }
       },
       "sku": {
         "type": "long"
