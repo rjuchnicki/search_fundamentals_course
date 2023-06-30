@@ -112,17 +112,64 @@ def create_query(user_query, filters, sort="_score", sortDir="desc"):
     query_obj = {
         'size': 10,
         "query": {
-            "bool": {
-                "must": [
+            "function_score": {
+                "boost_mode": "multiply",
+                "score_mode": "sum",
+                "functions": [
                     {
-                        "query_string": {
-                            "fields": [ "name", "shortDescription", "longDescription" ],
-                            "phrase_slop": 3,
-                            "query": user_query
+                        "filter": {
+                            "exists": {
+                                "field": "salesRankShortTerm"
+                            }
                         },
-                    }
+                        "gauss": {
+                            "salesRankShortTerm": {
+                                "origin": "1.0",
+                                "scale": "100"
+                            }
+                        }
+                    },
+                    {
+                        "filter": {
+                            "exists": {
+                                "field": "salesRankMediumTerm"
+                            }
+                        },
+                        "gauss": {
+                            "salesRankMediumTerm": {
+                                "origin": "1.0",
+                                "scale": "100"
+                            }
+                        }
+                    },
+                    {
+                        "filter": {
+                            "exists": {
+                                "field": "salesRankLongTerm"
+                            }
+                        },
+                        "gauss": {
+                            "salesRankLongTerm": {
+                                "origin": "1.0",
+                                "scale": "100"
+                            }
+                        }
+                    },
                 ],
-                "filter": filters
+                "query": {
+                    "bool": {
+                        "must": [
+                            {
+                                "query_string": {
+                                    "fields": [ "name^100", "shortDescription^50", "longDescription^10", "description" ],
+                                    "phrase_slop": 3,
+                                    "query": user_query
+                                },
+                            }
+                        ],
+                        "filter": filters
+                    }
+                }
             }
         },
         "aggs": {
